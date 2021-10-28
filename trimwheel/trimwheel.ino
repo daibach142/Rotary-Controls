@@ -47,7 +47,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
    Compile and download the sketch. There is a BUG in thew download process, 
    and it will (probably) fail. To complete the load, find the location where
    the compiled files are (see last lines output prior to the orange load failed
-   lines). In that location, there will be a file 'trimwheel.elf.uf2'. Copy this
+   lines). In that location, there will be a file 'trimwheel.ino.elf.uf2'. Copy this
    to the (newly mounted) 'RPI-RP2' folder.
    
    The program will start running after the copy.
