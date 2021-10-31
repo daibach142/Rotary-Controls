@@ -62,8 +62,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
    
    ****************************************************************/
  
-#include <PicoGamepad.h>
-
+#include "MyPicoGamepad.h"
+//#include <PicoGamepad.h>
 #include <Rotary.h>
 
 // Digital pins
