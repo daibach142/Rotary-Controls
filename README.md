@@ -1,12 +1,11 @@
-Trimwheel for FGFS
+Rotary Encoders for FGFS
 ==================
 
-This uses a Rotary Encoder (RE) and a Raspberry Pi Pico (Pico) to connect the RE to FlightGear Flight Simulator as a Pitch Trimwheel.
+This uses (up to) 3 Rotary Encoders (RE) and a Raspberry Pi Pico (Pico) to connect the REs to FlightGear Flight Simulator as a Pitch Trimwheel and HDG and CRS adjusters.
 
-A configuration file for the Trimwheel is provided for FGFS, and no additional configuration is required.
+A configuration file is provided for FGFS, and no additional configuration is required.
 
-The Pico has lots of expansion capabilities, and could easily accommodate another RE perhaps for roll trim, and maybe some switches.
-
+The software will work fine with any or all the REs connected.
 
 
 
