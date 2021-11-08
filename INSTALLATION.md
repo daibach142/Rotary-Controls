@@ -7,8 +7,9 @@ Materials
 
  1. Your Trimwheel with its Rotary Encoder (RE)
  2. (Optional) 2 off 100nF ceramic capacitors.
- 3. Rapsberry Pi Pico.
+ 3. Raspberry Pi Pico.
  4. Hook-up wire.
+ 5. For (optional) HSI - HDG and CRS setting, 2 more REs & optional caps.
  
 Load Software into Pico
 -----------------------
@@ -24,6 +25,8 @@ Electrical
  1. Connect the RE being used as a trimwheel to locations GP2 and GP3 on the Pico. Depending on the RE being used, GP2 connects to the input for 'pitch down' (the direction can be easily swapped in the FGFS configuration file). 
  2. Connect the Common or Ground pin on the RE to any GND location on the Pico.
  3. Connect a 100nF ceramic capacitor between each of the RE data pins to the Common or Ground pin. (optional)
+ 4. For the HDG RE, connect to GP6 and GP7. There is a GND location adjacent to GP6.
+ 5. For the CRS RE, connect to GP10 and GP11. There is a GND location adjacent to GP10.
  
 Configure FGFS
 --------------

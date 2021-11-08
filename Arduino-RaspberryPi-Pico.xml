@@ -2,6 +2,7 @@
 
 <PropertyList>
   <name type="string">Arduino RaspberryPi Pico</name>
+  
    <button n="0">
     <desc type="string">Custom</desc>
     <repeatable type="string">true</repeatable>
@@ -11,6 +12,7 @@
       <module type="string">__js0</module>
     </binding>
   </button>
+  
   <button n="1">
     <desc type="string">Custom</desc>
     <repeatable type="string">true</repeatable>
@@ -18,6 +20,46 @@
       <command type="string">nasal</command>
       <script type="string">controls.elevatorTrim(-0.75)</script>
       <module type="string">__js0</module>
+    </binding>
+  </button>
+
+  <button n="2">
+    <desc type="string">Custom</desc>
+    <repeatable type="string">true</repeatable>
+    <binding>
+      <command type="string">property-adjust</command>
+      <property type="string">/autopilot/settings/heading-bug-deg</property>
+      <step type="double">1.0</step>
+    </binding>
+  </button>
+
+  <button n="3">
+    <desc type="string">Custom</desc>
+    <repeatable type="string">true</repeatable>
+    <binding>
+      <command type="string">property-adjust</command>
+      <property type="string">/autopilot/settings/heading-bug-deg</property>
+      <step type="double">-1.0</step>
+    </binding>
+  </button>
+
+  <button n="4">
+    <desc type="string">Custom</desc>
+    <repeatable type="string">true</repeatable>
+    <binding>
+      <command type="string">property-adjust</command>
+      <property type="string">/instrumentation/nav/radials/selected-deg</property>
+      <step type="double">1.0</step>
+    </binding>
+  </button>
+
+  <button n="5">
+    <desc type="string">Custom</desc>
+    <repeatable type="string">true</repeatable>
+    <binding>
+      <command type="string">property-adjust</command>
+      <property type="string">/instrumentation/nav/radials/selected-deg</property>
+      <step type="double">-1.0</step>
     </binding>
   </button>
 

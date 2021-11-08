@@ -62,31 +62,68 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
    
    ****************************************************************/
  
-#include "MyPicoGamepad.h"
-//#include <PicoGamepad.h>
+//#include "MyPicoGamepad.h"
+#include <PicoGamepad.h>
 #include <Rotary.h>
 
-// Digital pins
-const uint8_t RE_IN1 = 2;
-const uint8_t RE_IN2 = 3;
 
-// Button numbers
-const uint8_t BUTTON_TRIM_UP = 1;
-const uint8_t BUTTON_TRIM_DOWN = 0;
+//// Digital pins
+//const uint8_t PINS[][2] = 	{
+//								{2, 3}, 		// Elevator trim
+//								{6, 7}, 		// HDG
+//								{10, 11}		// CRS
+//							};
+//
+//
+//// Button numbers
+//const uint8_t BUTTONS[][2] = 	{
+//									{0, 1}, 	// Elevator trim
+//									{2, 3}, 	// HDG
+//									{4, 5}	// CRS
+//								};
+//	 
+//
+//
+//Rotary encoders[] = {
+//					Rotary(PINS[0][0], PINS[0][1]),		// Elevator trim
+//					Rotary(PINS[1][0], PINS[1][1]),		// HDG 
+//					Rotary(PINS[2][0], PINS[2][1])		// CRS
+//					};
+
+const uint8_t UP = 0;
+const uint8_t DOWN = 1;
 
 // Button Hold Time - milliseconds
 // This seems to be a suitable time, 20 millis is not long enough
 // Value chosen by experimentation
 const unsigned long BUTTON_HOLD_TIME = 40;
 
-Rotary encoder = Rotary(RE_IN1, RE_IN2);
+struct Re {
+  Rotary encoder;
+  uint8_t pin_up, pin_down;
+  uint8_t button_up, button_down;
+};
+
+Re encoders[3] = {
+  { Rotary(2, 3),    2,  3, 0, 1 },     // Elevator Trim
+  { Rotary(6, 7),    6,  7, 2, 3 },     // HDG
+  { Rotary(10, 11), 10, 11, 4, 5 }      // CRS
+};
+
+const uint8_t ENTRIES = sizeof(encoders) / sizeof(Re);
+
 PicoGamepad gamepad;
 
 void setup() {
-
-  pinMode(RE_IN1, INPUT_PULLUP);
-  pinMode(RE_IN2, INPUT_PULLUP);
-
+//  Serial.begin(115200);
+//  while (!Serial) ;
+  
+//  Serial.println("Three Rotary Encoders in a row");
+  
+	for (int i = 0; i < ENTRIES; i++) {
+    pinMode(encoders[i].pin_up, INPUT_PULLUP);
+    pinMode(encoders[i].pin_down, INPUT_PULLUP);
+	}
 }
 
 void loop() {
@@ -99,11 +136,16 @@ void loop() {
   // The processing rate is controlled by BUTTON_HOLD_TIME, which sets the time 
   // the RE pin appears pressed
   
-  tick = encoder.process();   // poll RE pins
-  if (tick == DIR_CW) {
-    pressAButton(BUTTON_TRIM_DOWN);
-  } else if (tick == DIR_CCW) {
-    pressAButton(BUTTON_TRIM_UP);
+  for (int i = 0; i < ENTRIES; i++) {
+//    Serial.println(ENTRIES, DEC);
+  	tick = encoders[i].encoder.process();
+    if (tick == DIR_CW) {
+//      Serial.println("DOWN");
+      pressAButton(encoders[i].button_down);
+    } else if (tick == DIR_CCW) {
+//      Serial.println("UP");
+      pressAButton(encoders[i].button_up);
+    }
   }
 }
 
