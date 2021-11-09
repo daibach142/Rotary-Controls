@@ -89,9 +89,9 @@ struct Re {
 };
 
 Re encoders[3] = {
-  { Rotary(2, 3),    2,  3, 0, 1 },     // Elevator Trim
-  { Rotary(6, 7),    6,  7, 2, 3 },     // HDG
-  { Rotary(10, 11), 10, 11, 4, 5 }      // CRS
+  { Rotary(2, 3),    .pin_up = 2,  .pin_down = 3, .button_up = 0, .button_down = 1 },     // Elevator Trim
+  { Rotary(6, 7),    .pin_up = 6,  .pin_down = 7, .button_up = 2, .button_down = 3 },     // HDG
+  { Rotary(10, 11),  .pin_up = 10,  .pin_down = 11, .button_up = 4, .button_down = 5 }    // CRS 
 };
 
 const uint8_t ENTRIES = sizeof(encoders) / sizeof(Re);
