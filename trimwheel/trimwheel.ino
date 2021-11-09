@@ -1,4 +1,4 @@
-/* Trimwheel Version 1.0 */
+/* Trimwheel Version 1.1 */
 
 /*
 Copyright (C) 2021 Dave Attwood
@@ -34,6 +34,13 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
    Connect 100nF ceramic capacitors from the centre to each outer leg for
    debounce.
    
+   ****************************************************************
+   * Now modified for two extra REs for HSI HDG and CRS control
+   * on pins GP6 & GP7, (HDG) and pins GP10 & GP11 (CRS)
+   *
+   * Software runs fine with any or all of the REs attached
+   ****************************************************************
+   
    Setup Arduino IDE
    =================
    
@@ -62,33 +69,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
    
    ****************************************************************/
  
-//#include "MyPicoGamepad.h"
+
 #include <PicoGamepad.h>
 #include <Rotary.h>
 
-
-//// Digital pins
-//const uint8_t PINS[][2] = 	{
-//								{2, 3}, 		// Elevator trim
-//								{6, 7}, 		// HDG
-//								{10, 11}		// CRS
-//							};
-//
-//
-//// Button numbers
-//const uint8_t BUTTONS[][2] = 	{
-//									{0, 1}, 	// Elevator trim
-//									{2, 3}, 	// HDG
-//									{4, 5}	// CRS
-//								};
-//	 
-//
-//
-//Rotary encoders[] = {
-//					Rotary(PINS[0][0], PINS[0][1]),		// Elevator trim
-//					Rotary(PINS[1][0], PINS[1][1]),		// HDG 
-//					Rotary(PINS[2][0], PINS[2][1])		// CRS
-//					};
 
 const uint8_t UP = 0;
 const uint8_t DOWN = 1;
@@ -115,14 +99,9 @@ const uint8_t ENTRIES = sizeof(encoders) / sizeof(Re);
 PicoGamepad gamepad;
 
 void setup() {
-//  Serial.begin(115200);
-//  while (!Serial) ;
-  
-//  Serial.println("Three Rotary Encoders in a row");
-  
 	for (int i = 0; i < ENTRIES; i++) {
-    pinMode(encoders[i].pin_up, INPUT_PULLUP);
-    pinMode(encoders[i].pin_down, INPUT_PULLUP);
+      pinMode(encoders[i].pin_up, INPUT_PULLUP);
+      pinMode(encoders[i].pin_down, INPUT_PULLUP);
 	}
 }
 
@@ -137,13 +116,10 @@ void loop() {
   // the RE pin appears pressed
   
   for (int i = 0; i < ENTRIES; i++) {
-//    Serial.println(ENTRIES, DEC);
   	tick = encoders[i].encoder.process();
     if (tick == DIR_CW) {
-//      Serial.println("DOWN");
       pressAButton(encoders[i].button_down);
     } else if (tick == DIR_CCW) {
-//      Serial.println("UP");
       pressAButton(encoders[i].button_up);
     }
   }
