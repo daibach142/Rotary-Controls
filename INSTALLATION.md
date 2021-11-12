@@ -2,6 +2,11 @@
 Installation
 ============
 
+NOTE
+===
+
+It has been reported that the software **IS** unreliable without the capacitors.
+
 Materials
 ---------
 
