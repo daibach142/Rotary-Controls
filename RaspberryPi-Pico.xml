@@ -29,6 +29,9 @@
       <command type="string">property-adjust</command>
       <property type="string">/autopilot/settings/heading-bug-deg</property>
       <step type="double">1.0</step>
+      <min>0</min>
+      <max>360</max>
+      <wrap>1</wrap>
     </binding>
   </button>
 
@@ -39,6 +42,9 @@
       <command type="string">property-adjust</command>
       <property type="string">/autopilot/settings/heading-bug-deg</property>
       <step type="double">-1.0</step>
+      <min>0</min>
+      <max>360</max>
+      <wrap>1</wrap>
     </binding>
   </button>
 
@@ -49,6 +55,9 @@
       <command type="string">property-adjust</command>
       <property type="string">/instrumentation/nav/radials/selected-deg</property>
       <step type="double">1.0</step>
+      <min>0</min>
+      <max>360</max>
+      <wrap>1</wrap>
     </binding>
   </button>
 
@@ -59,6 +68,9 @@
       <command type="string">property-adjust</command>
       <property type="string">/instrumentation/nav/radials/selected-deg</property>
       <step type="double">-1.0</step>
+      <min>0</min>
+      <max>360</max>
+      <wrap>1</wrap>
     </binding>
   </button>
 
