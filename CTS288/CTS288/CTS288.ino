@@ -1,6 +1,6 @@
-/* Trimwheel Version 1.1 */
-
-/*
+/* Encoders for FGFS Trimwqheel, HDG and CRS Version 1.1 */
+/* This version for Leo Bodnar Rotary Encoders type CTS288
+  /*
   Copyright (C) 2021 Dave Attwood
 
   This program is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@
   Compile and download the sketch. There is a BUG in thew download process,
   and it will (probably) fail. To complete the load, find the location where
   the compiled files are (see last lines output prior to the orange load failed
-  lines). In that location, there will be a file 'trimwheel.ino.elf.uf2'. Copy this
+  lines). In that location, there will be a file 'CTS288.ino.elf.uf2'. Copy this
   to the (newly mounted) 'RPI-RP2' folder.
 
   The program will start running after the copy.
@@ -71,56 +71,78 @@
 
 
 #include <PicoGamepad.h>
-#include <Rotary.h>
 
+/*
 
-const uint8_t UP = 0;
-const uint8_t DOWN = 1;
+  Code table for 2 bit binary
 
-// Button Hold Time - milliseconds
-// This seems to be a suitable time, 20 millis is not long enough
-// Value chosen by experimentation
-const unsigned long BUTTON_HOLD_TIME = 40;
+  V   0 1 3 2 0
+  B   0 0 1 1 0
+  A   0 1 1 0 0
+  Pos 1 2 3 4 5 ...
 
-struct Re {
-  Rotary encoder;
-  uint8_t pin_up, pin_down;
-  uint8_t button_up, button_down;
-};
-
-Re encoders[] = {
-  { Rotary(2, 3),    .pin_up = 2,  .pin_down = 3, .button_up = 0, .button_down = 1 },     // Elevator Trim
-  { Rotary(6, 7),    .pin_up = 6,  .pin_down = 7, .button_up = 2, .button_down = 3 },     // HDG
-  { Rotary(10, 11),  .pin_up = 10,  .pin_down = 11, .button_up = 4, .button_down = 5 }    // CRS
-};
-
-const uint8_t ENTRIES = sizeof(encoders) / sizeof(Re);
-
+*/
 PicoGamepad gamepad;
 
+#define BUTTON_HOLD_TIME 40
+
+const uint8_t CW = 1;
+const uint8_t CCW = 2;
+
+struct CTS288 {
+  uint8_t state;
+  uint8_t pinUp,  pinDown;
+  uint8_t butUp,  butDown;
+};
+
+CTS288 encoders[] = {
+  {.state = 0, .pinUp = 2, .pinDown = 3, .butUp = 0, .butDown = 1},
+  {.state = 0, .pinUp = 6, .pinDown = 7, .butUp = 2, .butDown = 3},
+  {.state = 0, .pinUp = 10, .pinDown = 11, .butUp = 4, .butDown = 5}
+};
+
+const uint8_t ENCODERS = sizeof(encoders) / sizeof(CTS288);
+
+static uint8_t codeTable[][4] = {
+  {0, CW, CCW, 0},
+  {CCW, 0, 0, CW},
+  {CW, 0, 0, CCW},
+  {0, CCW, CW, 0},
+};
+
+
+
+uint8_t process(uint8_t *state, uint8_t value) {
+
+  uint8_t nextValue;
+
+  nextValue = codeTable[*state][value];
+  *state = value;
+  return nextValue;
+
+}
+
 void setup() {
-  for (int i = 0; i < ENTRIES; i++) {
-    pinMode(encoders[i].pin_up, INPUT_PULLUP);
-    pinMode(encoders[i].pin_down, INPUT_PULLUP);
+  uint8_t temp;
+
+  for (uint8_t i = 0; i < ENCODERS; i++) {
+    pinMode(encoders[i].pinUp, INPUT_PULLUP);
+    pinMode(encoders[i].pinDown, INPUT_PULLUP);
+    encoders[i].state = (digitalRead(encoders[i].pinDown) << 1) | digitalRead(encoders[i].pinUp);
   }
 }
 
 void loop() {
-  uint8_t tick;
-
-  // the 'official' arduino pi pico software does not handle interrupts
-  // so the code simply polls the pins continuously
-  // this doesn't really matter as the RE doesn't move that fast (more than
-  // 25 ticks per second to lose a tick)
-  // The processing rate is controlled by BUTTON_HOLD_TIME, which sets the time
-  // the RE pin appears pressed
-
-  for (int i = 0; i < ENTRIES; i++) {
-    tick = encoders[i].encoder.process();
-    if (tick == DIR_CW) {
-      pressAButton(encoders[i].button_down);
-    } else if (tick == DIR_CCW) {
-      pressAButton(encoders[i].button_up);
+  for (uint8_t i = 0; i < ENCODERS; i++) {
+    uint8_t value = (digitalRead(encoders[i].pinDown) << 1) | digitalRead(encoders[i].pinUp);
+    if (value != encoders[i].state) {
+      uint8_t res = process(&encoders[i].state, value);
+      if (res == CW) {
+        pressAButton(encoders[i].butUp);
+      }
+      else if (res = CCW) {
+        pressAButton(encoders[i].butDown);
+      }
     }
   }
 }
@@ -131,6 +153,5 @@ void pressAButton(uint8_t num) {
   delay(BUTTON_HOLD_TIME);      // give FGFS time to see it
   gamepad.SetButton(num, false);
   gamepad.send_update();        // set button OFF
-//  delay(BUTTON_HOLD_TIME);      // give FGFS time to see it
-
+  delay(BUTTON_HOLD_TIME);      // give FGFS time to see it
 }

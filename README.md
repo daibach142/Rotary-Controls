@@ -8,4 +8,4 @@ A configuration file is provided for FGFS, and no additional configuration is re
 The software will work fine with any or all the REs connected.
 
 
-
+The file `trimwheel.ino` is for standard 4-bit gray code encoders, and the file `CTS288.ino` for CTS 288 encoders with 2-bit binary as provided by Leo Bodnar and others

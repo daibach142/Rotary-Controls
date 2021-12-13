@@ -2,6 +2,10 @@
 Installation
 ============
 
+There are two distinct versions of the software, one for standard 4 bit Gray code (trimwheel.ino),
+ and one for the 2 bit binary code as used in the Leo Bodnar Rotary Encoders CTS288 (CTS288.ino).  
+Installation is identical except for the `*.uf2` files.
+
 NOTE
 ===
 
@@ -21,7 +25,7 @@ Load Software into Pico
 
  1. Open the Pico in Bootloader mode (hold the BOOTSEL button down when plugging into the USB cable, then release button).
  2. The Pico appears as a memory device, `RPI-RP2`.
- 3. Drag and drop the firmware file `trimwheel.ino.elf.uf2` onto `RPI-RP2`.
+ 3. Drag and drop the firmware file `trimwheel.ino.elf.uf2` or `CTS288.ino.elf.uf2` onto `RPI-RP2`.
  4. The Pico can now be disconnected from USB.
 
 Electrical
