@@ -4,7 +4,7 @@
   <name type="string">RaspberryPi Pico</name>
    <button n="0">
     <desc type="string">Custom</desc>
-    <repeatable type="string">true</repeatable>
+    <repeatable type="string">false</repeatable>
     <binding>
       <command type="string">nasal</command>
       <script type="string">controls.elevatorTrim(1.25)</script>
@@ -14,7 +14,7 @@
   
   <button n="1">
     <desc type="string">Custom</desc>
-    <repeatable type="string">true</repeatable>
+    <repeatable type="string">false</repeatable>
     <binding>
       <command type="string">nasal</command>
       <script type="string">controls.elevatorTrim(-1.25)</script>
@@ -24,7 +24,7 @@
  
   <button n="2">
     <desc type="string">Custom</desc>
-    <repeatable type="string">true</repeatable>
+    <repeatable type="string">false</repeatable>
     <binding>
       <command type="string">property-adjust</command>
       <property type="string">/autopilot/settings/heading-bug-deg</property>
@@ -37,7 +37,7 @@
 
   <button n="3">
     <desc type="string">Custom</desc>
-    <repeatable type="string">true</repeatable>
+    <repeatable type="string">false</repeatable>
     <binding>
       <command type="string">property-adjust</command>
       <property type="string">/autopilot/settings/heading-bug-deg</property>
@@ -50,7 +50,7 @@
 
   <button n="4">
     <desc type="string">Custom</desc>
-    <repeatable type="string">true</repeatable>
+    <repeatable type="string">false</repeatable>
     <binding>
       <command type="string">property-adjust</command>
       <property type="string">/instrumentation/nav/radials/selected-deg</property>
@@ -63,7 +63,7 @@
 
   <button n="5">
     <desc type="string">Custom</desc>
-    <repeatable type="string">true</repeatable>
+    <repeatable type="string">false</repeatable>
     <binding>
       <command type="string">property-adjust</command>
       <property type="string">/instrumentation/nav/radials/selected-deg</property>
