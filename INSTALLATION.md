@@ -40,8 +40,10 @@ Electrical
 Configure FGFS
 --------------
 
-**On Linux** Copy `Arduino-RaspberryPi-Pico.xml` to `/usr/share/games/flightgear/Input/Joysticks`.  
-**On Windows** Copy `RaspberryPi-Pico.xml` to `C:\Program Files\Flightgear 2020.3\data\Input\Joysticks`.  
+**On Linux** Copy `Arduino-RaspberryPi-Pico.xml` to `~/.fgfs/Input/Joysticks`  
+**On Windows** Copy `RaspberryPi-Pico.xml` to `%UserProfile%\Appdata\Roaming\flightgear.org\Input\Joysticks`  
+
+**Note** You may need to create the directories/folders `Input` and `Joysticks`
 
 Both these files have identical contents.
 
